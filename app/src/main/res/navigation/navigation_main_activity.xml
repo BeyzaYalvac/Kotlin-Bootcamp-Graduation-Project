@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_main_activity"
+    app:startDestination="@id/anaSayfaFragment">
+
+    <fragment
+        android:id="@+id/anaSayfaFragment"
+        android:name="com.example.androidbootcampbitirmeprojesi.views.fragment.AnaSayfaFragment"
+        android:label="AnaSayfaFragment" >
+        <action
+            android:id="@+id/yemekDetayGecis"
+            app:destination="@id/detaySayfaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detaySayfaFragment"
+        android:name="com.example.androidbootcampbitirmeprojesi.views.fragment.DetaySayfaFragment"
+        android:label="DetaySayfaFragment" >
+        <argument
+            android:name="yemek"
+            app:argType="com.example.androidbootcampbitirmeprojesi.data.entity.Yemekler" />
+    </fragment>
+    <fragment
+        android:id="@+id/sepetSayfaFragment"
+        android:name="com.example.androidbootcampbitirmeprojesi.views.fragment.SepetSayfaFragment"
+        android:label="SepetSayfaFragment" />
+</navigation>
