@@ -7,12 +7,13 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidbootcampbitirmeprojesi.data.entity.Yemekler
+import com.example.androidbootcampbitirmeprojesi.data.repo.YemeklerRepository
 import com.example.androidbootcampbitirmeprojesi.databinding.UrunCardTasarimBinding
 import com.example.androidbootcampbitirmeprojesi.views.fragment.AnaSayfaFragmentDirections
 import com.example.androidbootcampbitirmeprojesi.views.viewModel.AnaSayfaViewModel
 
 
-class YemekAdapter(var mContext: Context, var yemeklerListesi:List<Yemekler>,viewModel: AnaSayfaViewModel):RecyclerView.Adapter<YemekAdapter.CardTasarimHolder>() {
+class YemekAdapter(var mContext: Context, var yemeklerListesi:List<Yemekler>,val viewModel: AnaSayfaViewModel):RecyclerView.Adapter<YemekAdapter.CardTasarimHolder>() {
     inner class CardTasarimHolder(var binding: UrunCardTasarimBinding) :RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardTasarimHolder {
@@ -29,7 +30,6 @@ class YemekAdapter(var mContext: Context, var yemeklerListesi:List<Yemekler>,vie
         val t = holder.binding
         t.textViewYemekAdi.text = yemek.yemek_adi
         t.textViewFiyat.text=yemek.yemek_fiyat.toString()
-
         val imageUrl = "http://kasimadalan.pe.hu/yemekler/resimler/${yemek.yemek_resim_adi}"
 
         Glide.with(mContext)
@@ -42,6 +42,20 @@ class YemekAdapter(var mContext: Context, var yemeklerListesi:List<Yemekler>,vie
             Navigation.findNavController(it).navigate(gecis)
 
         }
+
+        t.imageViewAddIcon.setOnClickListener {
+            var adetText = t.textViewYemekTane.text.toString()
+            var adet = adetText.toIntOrNull() ?: 1 // boşsa varsayılan 1
+        adet+=1
+            t.textViewYemekTane.text=adet.toString()
+        }
+
+        t.buttonSepeteEkle.setOnClickListener {
+            val adetText = t.textViewYemekTane.text.toString()
+            val adet = adetText.toIntOrNull() ?: 1 // boşsa varsayılan 1
+        viewModel.sepeteYemekEkle(yemek, adet, "Beyzay")
+        }
+
     }
 
 }

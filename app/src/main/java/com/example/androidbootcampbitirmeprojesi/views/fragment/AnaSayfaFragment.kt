@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.androidbootcampbitirmeprojesi.data.entity.Yemekler
@@ -21,13 +22,24 @@ private lateinit var viewModel:AnaSayfaViewModel
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentAnaSayfaBinding.inflate(inflater, container, false)
-        viewModel.yemeklerListesi.observe(viewLifecycleOwner){
+        viewModel.filteredYemekler.observe(viewLifecycleOwner){
     var yemeklerAdapter=YemekAdapter(requireContext(),it,viewModel)
     binding.YemeklerRv.adapter= yemeklerAdapter
 }
 
         binding.YemeklerRv.layoutManager= GridLayoutManager(requireContext(),2)
 
+        binding.searchViewYemekAra.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.filterYemekler(newText.orEmpty())
+                return true
+            }
+        })
         return binding.root
     }
 

@@ -8,5 +8,9 @@ class ApiUtils {
         fun getYemeklerDao():YemeklerDao{
             return RetrofitClient.getClient(BASE_URL).create(YemeklerDao::class.java)
         }
+
+        fun getYemeklerSepetDao():YemeklerDao{
+            return RetrofitClient.getClient(BASE_URL).create(YemeklerDao::class.java)
+        }
     }
 }
